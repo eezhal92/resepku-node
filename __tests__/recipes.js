@@ -1,7 +1,7 @@
 const {
   addComment,
   findRecipe,
-  bumpRecipeLike,
+  bumpRecipeLikes,
   fieldsResolver,
   paginateRecipes,
 } = require('../recipes');
@@ -36,20 +36,20 @@ describe('findRecipe', () => {
   });
 });
 
-describe('bumpRecipeLike', () => {
+describe('bumpRecipeLikes', () => {
   test('it increments recipe count, if found', () => {
     const id = 1;
     const recipe = findRecipe(id);
     const likes = recipe.likes;
 
-    const updated = bumpRecipeLike(1);
+    const updated = bumpRecipeLikes(1);
 
     expect(updated.likes).not.toEqual(likes);
     expect(updated.likes - 1).toEqual(likes);
   });
 
   test('it throws error, if not found', () => {
-    expect(() => bumpRecipeLike(0)).toThrow();
+    expect(() => bumpRecipeLikes(0)).toThrow();
   });
 });
 

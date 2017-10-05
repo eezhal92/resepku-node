@@ -42,7 +42,7 @@ app.get('/recipes', (req, res) => {
 
 app.get('/recipes/:id', (req, res) => {
   try {
-    const fields = (req.query.fields === undefined) ? undefined : parseFields(req.query.fields);
+    const fields = req.query.fields !== undefined ? parseFields(req.query.fields) : undefined;
     const recipe = recipes.findRecipe(parseInt(req.params.id));
 
     return res.json(recipes.fieldsResolver(recipe, fields));
@@ -55,7 +55,7 @@ app.post('/recipes/:id/likes', (req, res, next) => {
   const recipeId = parseInt(req.params.id);
 
   try {
-    return res.json(recipes.bumpRecipeLike(recipeId));
+    return res.json(recipes.bumpRecipeLikes(recipeId));
   } catch (err) {
     return res.status(404).json({ message: err.message });
   }

@@ -16,7 +16,6 @@ function paginateRecipes({ page = 1, limit = 9, fields = null } = {}) {
   const end = begin + limit;
   const total = recipes.length;
   const result = recipes.slice(begin, end);
-
   const hasNextResult = recipes.slice(end, end + 1).length;
   const nextPage = hasNextResult ? page + 1 : null;
   const prevPage = page - 1 === 0 ? null : page - 1;
@@ -41,7 +40,7 @@ function findRecipe(id) {
   return foundRecipe;
 }
 
-function bumpRecipeLike(id) {
+function bumpRecipeLikes(id) {
   const recipe = findRecipe(id);
 
   recipe.likes += 1;
@@ -69,17 +68,15 @@ function fieldsResolver(recipe, fields = null) {
     throw new Error(`Please provide valid fields. Available fields: ${availableFields.join(', ')}`);
   }
 
-  return validRequestedFields.map((field) => {
-    return { [field]: recipe[field] };
-  }).reduce((acc, field) => {
-    return Object.assign(acc, field);
-  }, {});
+  return validRequestedFields
+    .map(field => ({ [field]: recipe[field] }))
+    .reduce((acc, field) => Object.assign(acc, field), {});
 }
 
 module.exports = {
   addComment,
   findRecipe,
-  bumpRecipeLike,
+  bumpRecipeLikes,
   fieldsResolver,
   paginateRecipes,
 };
