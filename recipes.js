@@ -11,6 +11,23 @@ const recipes = Array.from({ length: recipesCount }, (val, i) => ({
   comments: [],
 }));
 
+function fieldsResolver(recipe, fields = null) {
+  if (!fields) {
+    return recipe;
+  }
+
+  const availableFields = Object.keys(recipe);
+  const validRequestedFields = intersection(availableFields, fields);
+
+  if (!validRequestedFields.length) {
+    throw new Error(`Please provide valid fields. Available fields: ${availableFields.join(', ')}`);
+  }
+
+  return validRequestedFields
+    .map(field => ({ [field]: recipe[field] }))
+    .reduce((acc, field) => Object.assign(acc, field), {});
+}
+
 function paginateRecipes({ page = 1, limit = 9, fields = null } = {}) {
   const begin = (page * limit) - limit;
   const end = begin + limit;
@@ -28,7 +45,7 @@ function paginateRecipes({ page = 1, limit = 9, fields = null } = {}) {
     nextPage,
     prevPage,
   };
-};
+}
 
 function findRecipe(id) {
   const foundRecipe = recipes.find(recipe => recipe.id === id);
@@ -54,23 +71,6 @@ function addComment(id, commentText) {
   recipe.comments.push(commentText);
 
   return recipe;
-}
-
-function fieldsResolver(recipe, fields = null) {
-  if (!fields) {
-    return recipe;
-  }
-
-  const availableFields = Object.keys(recipe);
-  const validRequestedFields = intersection(availableFields, fields);
-
-  if (!validRequestedFields.length) {
-    throw new Error(`Please provide valid fields. Available fields: ${availableFields.join(', ')}`);
-  }
-
-  return validRequestedFields
-    .map(field => ({ [field]: recipe[field] }))
-    .reduce((acc, field) => Object.assign(acc, field), {});
 }
 
 module.exports = {

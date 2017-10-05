@@ -19,13 +19,13 @@ const limiter = new RateLimit({
 app.use(limiter);
 app.use(bodyParser.json());
 
-const parseFields = (fields) => fields.split(',').map(field => field.trim());
+const parseFields = fields => fields.split(',').map(field => field.trim());
 
 app.get('/recipes', (req, res) => {
   let { page, limit, fields } = req.query;
 
-  page = parseInt(page) || 1;
-  limit = parseInt(limit) || 9;
+  page = parseInt(page, 10) || 1;
+  limit = parseInt(limit, 10) || 9;
 
   fields = fields ? parseFields(fields) : undefined;
 
@@ -43,7 +43,7 @@ app.get('/recipes', (req, res) => {
 app.get('/recipes/:id', (req, res) => {
   try {
     const fields = req.query.fields !== undefined ? parseFields(req.query.fields) : undefined;
-    const recipe = recipes.findRecipe(parseInt(req.params.id));
+    const recipe = recipes.findRecipe(parseInt(req.params.id, 10));
 
     return res.json(recipes.fieldsResolver(recipe, fields));
   } catch (err) {
@@ -51,8 +51,8 @@ app.get('/recipes/:id', (req, res) => {
   }
 });
 
-app.post('/recipes/:id/likes', (req, res, next) => {
-  const recipeId = parseInt(req.params.id);
+app.post('/recipes/:id/likes', (req, res) => {
+  const recipeId = parseInt(req.params.id, 10);
 
   try {
     return res.json(recipes.bumpRecipeLikes(recipeId));
@@ -61,12 +61,12 @@ app.post('/recipes/:id/likes', (req, res, next) => {
   }
 });
 
-app.post('/recipes/:id/comments', (req, res, next) => {
+app.post('/recipes/:id/comments', (req, res) => {
   const { text } = req.body;
-  const recipeId = parseInt(req.params.id);
+  const recipeId = parseInt(req.params.id, 10);
 
   if (text.length < 4) {
-    return res.status(422).json({ message: `'text' field should be at least 4 character` });
+    return res.status(422).json({ message: '\'text\' field should be at least 4 character' });
   }
 
   try {
