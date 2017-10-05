@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "node --inspect index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -10,5 +11,8 @@
     "express-rate-limit": "^2.9.0",
     "faker": "^4.1.0",
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "jest": "~21.2.1"
   }
 }
