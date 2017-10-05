@@ -40,7 +40,7 @@ describe('bumpRecipeLikes', () => {
   test('it increments recipe count, if found', () => {
     const id = 1;
     const recipe = findRecipe(id);
-    const likes = recipe.likes;
+    const { likes } = recipe;
 
     const updated = bumpRecipeLikes(1);
 
@@ -60,7 +60,7 @@ describe('fieldsResolver()', () => {
   });
 
   test('if fields is falsy, return recipe', () => {
-    [null, undefined, false, ''].forEach(fields => {
+    [null, undefined, false, ''].forEach((fields) => {
       expect(fieldsResolver(recipe, fields)).toEqual(recipe);
     });
   });
@@ -76,11 +76,9 @@ describe('fieldsResolver()', () => {
   test('it returns a single resolvable field', () => {
     const result = fieldsResolver(recipe, ['likes']);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        likes: expect.any(Number),
-      })
-    );
+    expect(result).toEqual(expect.objectContaining({
+      likes: expect.any(Number),
+    }));
   });
 
   test('it returns multiple resolvable fields', () => {
@@ -93,16 +91,14 @@ describe('fieldsResolver()', () => {
       'comments',
     ]);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        id: expect.any(Number),
-        title: expect.any(String),
-        text: expect.any(String),
-        image: expect.any(String),
-        likes: expect.any(Number),
-        comments: expect.any(Array),
-      })
-    );
+    expect(result).toEqual(expect.objectContaining({
+      id: expect.any(Number),
+      title: expect.any(String),
+      text: expect.any(String),
+      image: expect.any(String),
+      likes: expect.any(Number),
+      comments: expect.any(Array),
+    }));
   });
 });
 
@@ -124,10 +120,10 @@ describe('paginateRecipes', () => {
 
     test('it sets other pages appropriately', () => {
       const chunk = 10;
-      let pages = {};
+      const pages = {};
       let currentPage = 1;
 
-      while (true) {
+      while (true) { // eslint-disable-line no-constant-condition
         const recipes = paginateRecipes({ page: currentPage, limit: chunk });
         if (!recipes.result.length) {
           break;
@@ -140,7 +136,7 @@ describe('paginateRecipes', () => {
       const pageNumbers = Object.keys(pages);
 
       expect(pageNumbers).toEqual(['1', '2', '3']);
-      pageNumbers.forEach(num => {
+      pageNumbers.forEach((num) => {
         const page = pages[num];
         expect(page.result.length).toBeGreaterThan(0);
       });
@@ -149,7 +145,7 @@ describe('paginateRecipes', () => {
     test('it can return a subset of fields', () => {
       const recipes = paginateRecipes({ page: 1, limit: 10, fields: ['id'] });
 
-      recipes.result.forEach(recipe => {
+      recipes.result.forEach((recipe) => {
         expect(Object.keys(recipe)).toEqual(['id']);
       });
     });
