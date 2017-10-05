@@ -42,7 +42,7 @@ app.get('/recipes', (req, res) => {
 
 app.get('/recipes/:id', (req, res) => {
   try {
-    const fields = parseFields(req.query.fields) || undefined;
+    const fields = (req.query.fields === undefined) ? undefined : parseFields(req.query.fields);
     const recipe = recipes.findRecipe(parseInt(req.params.id));
 
     return res.json(recipes.fieldsResolver(recipe, fields));
