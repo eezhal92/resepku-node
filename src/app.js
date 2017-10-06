@@ -65,7 +65,7 @@ app.post('/recipes/:id/comments', (req, res) => {
   const { text } = req.body;
   const recipeId = parseInt(req.params.id, 10);
 
-  if (text.length < 4) {
+  if (!text || text.length < 4) {
     return res.status(422).json({ message: '\'text\' field should be at least 4 character' });
   }
 

@@ -18,6 +18,20 @@ describe('POST /recipes/:id/comments', () => {
       });
   });
 
+  test('should return status 422 if no text is sent', () => {
+    const payload = {};
+
+    return request.post('/recipes/1/comments')
+        .send(payload)
+        .expect(({ status }) => {
+          expect(status).toBe(422);
+          const recipe = findRecipe(1);
+
+          expect(recipe.comments.length).toBe(0);
+        });
+  });
+
+
   describe('add valid comment to spesific recipe', () => {
     test('first add', () => {
       const payload = { text: 'Hello There!' };
