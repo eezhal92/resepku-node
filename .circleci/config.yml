@@ -1,0 +1,52 @@
+version: 2.0
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.11
+    working_directory: ~/resepku-node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Run Tests
+          command: yarn test
+
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/resepku-node
+    environment:
+      HEROKU_APP: "resepku-api"
+    steps:
+      - checkout
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/heroku-setup.sh
+
+      - run:
+          command: |
+            git push heroku master:master
+            sleep 5 # sleep for 5 seconds to wait for dynos
+            heroku restart
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+
