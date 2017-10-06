@@ -22,15 +22,14 @@ describe('POST /recipes/:id/comments', () => {
     const payload = {};
 
     return request.post('/recipes/1/comments')
-        .send(payload)
-        .expect(({ status }) => {
-          expect(status).toBe(422);
-          const recipe = findRecipe(1);
+      .send(payload)
+      .expect(({ status }) => {
+        expect(status).toBe(422);
+        const recipe = findRecipe(1);
 
-          expect(recipe.comments.length).toBe(0);
-        });
+        expect(recipe.comments.length).toBe(0);
+      });
   });
-
 
   describe('add valid comment to spesific recipe', () => {
     test('first add', () => {
