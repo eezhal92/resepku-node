@@ -145,6 +145,6 @@ The response will be like:
     "text": "Tenetur sequi doloribus provident non et dignissimos nihil cupiditate quis. Eius consequatur et deserunt aut sed voluptas delectus fuga non. Consequatur labore expedita nisi quia sit et. Ut quasi est laudantium aperiam qui quia est.\n \rMolestiae exercitationem praesentium eos mollitia eius ut nostrum doloremque iure. A ullam aut voluptas consequatur omnis est aut. Ipsa occaecati commodi. Aut molestiae sint voluptatem blanditiis voluptatibus animi ipsam nulla id.\n \rDistinctio impedit voluptas et aliquam natus. Nihil asperiores ut quae rerum nostrum non est. Ea molestiae excepturi id repellendus ea iure rem. Mollitia quod sint mollitia velit hic debitis recusandae quis doloremque. Omnis eos maiores eos consequuntur nulla iure qui. Officia illum maiores corporis dolores esse rerum velit accusamus.",
     "image": "http://lorempixel.com/640/480/food",
     "likes": 0,
-    "comments": ['Hello there!']
+    "comments": ["Hello there!"]
 }
 ```
