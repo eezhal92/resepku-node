@@ -6,7 +6,7 @@ const recipes = Array.from({ length: recipesCount }, (val, i) => ({
   id: i + 1,
   title: faker.name.findName(),
   text: faker.lorem.paragraphs(),
-  image: faker.image.food(),
+  image: faker.image.imageUrl(640, 480, 'food', true, true),
   likes: 0,
   comments: [],
 }));
