@@ -6,7 +6,7 @@ const recipes = Array.from({ length: recipesCount }, (val, i) => ({
   id: i + 1,
   title: faker.name.findName(),
   text: faker.lorem.paragraphs(),
-  image: 'https://picsum.photos/640/480?random',
+  image: 'https://ucarecdn.com/eec44322-5899-4080-845e-fe90e2520c1f/8.jpeg',
   likes: 0,
   comments: [],
 }));
